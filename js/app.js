@@ -67,3 +67,22 @@ window.validate_email = (email) => {
 
   return true;
 }
+
+window.change_password = () => {
+  var password = document.querySelector('#change_password_form input[name="password"]').value;
+  var rep_password = document.querySelector('#change_password_form input[name="repeat_password"]').value;
+
+  if (password.length < 5) {
+    console.log('Password not valid');
+    launch_toast('Password not valid');
+    return;
+  }
+
+  if (password !== rep_password) {
+    console.log('Password repeat dont match');
+    launch_toast('Password repeat dont match');
+    return;
+  }
+
+  document.getElementById('change_password_form').submit();
+}

@@ -21,12 +21,26 @@
         <ul class="navbar-nav mr-auto">
         </ul>
         <ul class="navbar-nav ml-auto">
-            <li class="nav-item">
-              <a class="nav-link" href="/signin.php">Sign In</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/register.php">Register</a>
-            </li>
+            <?php if (!isset($_SESSION['user'])) { ?>
+              <li class="nav-item">
+                <a class="nav-link" href="/signin.php">Sign In</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/register.php">Register</a>
+              </li>
+            <?php }else{ ?>
+              <li class="nav-item">
+                <button id="navbarDropdown" class="nav-link dropdown-toggle btn btn-default" type="button" data-bs-toggle="dropdown" aria-expanded="false" v-pre>
+                    <?php echo $_SESSION['user']['name'] ?>
+                </button>
+                <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                  <a class="dropdown-item" href="javascript:;" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                      Logout
+                  </a>
+                  <form id="logout-form" action="logout.php" method="POST" class="d-none"></form>
+                </div>
+              </li>
+            <?php } ?>
         </ul>
       </div>
   </div>

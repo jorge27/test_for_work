@@ -5,10 +5,15 @@ include "constants.php";
 class Base
 {
     protected $mysql;
+    protected $post;
+    protected $get;
 
     function __construct() {
         session_start();
         $this->database_init();
+
+        $this->clean_method_variables();
+
         if ($_SERVER['REQUEST_METHOD'] === 'GET') {
                 return $this->get();
         }
@@ -33,7 +38,26 @@ class Base
         // echo $this->mysqli->host_info . "\n";
     }
 
-    public function db_query($query) {
-        return $this->mysqli->query($query)->fetch_assoc();
+    protected function db_insert($query) {
+        return $this->mysqli->query($query);
+    }
+
+    private function clean_method_variables() {
+        $this->get = [];
+        $this->post = [];
+
+        $reserverd_words = ["/insert/i", "/select/i", "/create/i", "/drop/i", "/from/i", "/where/i",  "/into/i",  "/update/i", "/;/i", "/database/i", "/\"/"];
+
+        foreach ($_POST as $key => $value) {
+            foreach ($reserverd_words as $word) {
+                $this->post[$key] = preg_replace($word, '', $value);
+            }
+        }
+
+        foreach ($_GET as $key => $value) {
+            foreach ($reserverd_words as $word) {
+                $this->get[$key] = preg_replace($word, '', $value);
+            }
+        }
     }
 }

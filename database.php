@@ -1,7 +1,5 @@
 <?php
 
-include "base.php";
-
 $userTable = '
   CREATE TABLE IF NOT EXISTS users(
     id int NOT NULL AUTO_INCREMENT,
@@ -10,7 +8,7 @@ $userTable = '
     password varchar(255) NOT NULL,
     created_at DATETIME,
     updated_at DATETIME,
-    PRIMARY KEY id
+    PRIMARY KEY (id)
   );
 ';
 
@@ -21,11 +19,6 @@ $reserPassword = '
     string_key varchar(255) NOT NULL,
     created_at DATETIME,
     updated_at DATETIME,
-    PRIMARY KEY id
+    PRIMARY KEY (id)
   );
 ';
-
-$controller = new Base();
-
-$controller->db_query($userTable);
-$controller->db_query($reserPassword);
